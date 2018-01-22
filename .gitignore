@@ -36,3 +36,10 @@ captures/
   
 # Keystore files  
 *.jkss
+
+
+
+.idea/
+
+*.apk
+*.json
