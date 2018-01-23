@@ -2,6 +2,7 @@ package com.zejian.emotionkeyboard.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import com.zejian.emotionkeyboard.emotionkeyboardview.NoHorizontalScrollerViewPa
 import com.zejian.emotionkeyboard.model.ImageModel;
 import com.zejian.emotionkeyboard.utils.EmotionUtils;
 import com.zejian.emotionkeyboard.utils.GlobalOnItemClickManagerUtils;
+import com.zejian.emotionkeyboard.utils.LogUtils;
 import com.zejian.emotionkeyboard.utils.SharedPreferencedUtils;
 
 import java.util.ArrayList;
@@ -191,7 +193,7 @@ public class EmotionMainFragment extends BaseFragment {
                 horizontalRecyclerviewAdapter.notifyItemChanged(oldPosition);
                 horizontalRecyclerviewAdapter.notifyItemChanged(CurrentPosition);
                 //viewpager界面切换
-                viewPager.setCurrentItem(position,false);
+                viewPager.setCurrentItem(position,true);
             }
 
             @Override
@@ -209,8 +211,9 @@ public class EmotionMainFragment extends BaseFragment {
         //创建修改实例
         EmotiomComplateFragment f1= (EmotiomComplateFragment) factory.getFragment(EmotionUtils.EMOTION_CLASSIC_TYPE);
         fragments.add(f1);
+        fragments.add(factory.getFragment(EmotionUtils.EMOTION_CLASSIC_TYPE));
         Bundle b=null;
-        for (int i=0;i<7;i++){
+        for (int i=1;i<7;i++){
             b=new Bundle();
             b.putString("Interge","Fragment-"+i);
             Fragment1 fg= Fragment1.newInstance(Fragment1.class,b);
@@ -219,6 +222,12 @@ public class EmotionMainFragment extends BaseFragment {
 
         NoHorizontalScrollerVPAdapter adapter =new NoHorizontalScrollerVPAdapter(getActivity().getSupportFragmentManager(),fragments);
         viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+            @Override
+            public void onPageSelected(int position) {
+                LogUtils.i("onPageSelected: " +position);
+            }
+        });
     }
 
 
